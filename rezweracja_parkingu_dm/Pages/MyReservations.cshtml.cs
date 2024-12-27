@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+[Authorize]
 public class MyReservationsModel : PageModel
 {
     private readonly ApplicationDbContext _context;
@@ -12,7 +15,7 @@ public class MyReservationsModel : PageModel
         _userManager = userManager;
     }
 
-    public List<Reservation> Reservations { get; set; }
+    public List<Reservation> Reservations { get; set; } = new();
 
     public async Task OnGetAsync()
     {
@@ -23,4 +26,16 @@ public class MyReservationsModel : PageModel
             .Where(r => r.UserId == user.Id)
             .ToList();
     }
+
+    public async Task<IActionResult> OnPostDeleteAsync(int id)
+    {
+        var reservation = await _context.Reservations.FindAsync(id);
+        if (reservation == null) return NotFound();
+
+        _context.Reservations.Remove(reservation);
+        await _context.SaveChangesAsync();
+
+        return RedirectToPage();
+    }
+
 }

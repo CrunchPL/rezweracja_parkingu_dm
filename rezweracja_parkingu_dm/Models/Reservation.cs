@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 
 public class Reservation
 {
     public int Id { get; set; } // Klucz główny
-    public string Sector { get; set; } = string.Empty; // Sektor (np. A, B, C, D)
-    public int SpotNumber { get; set; } // Numer miejsca (np. 0-9)
+    public string Sector { get; set; } = string.Empty; // Sektor parkingu
+    public int SpotNumber { get; set; } // Numer miejsca
     public DateTime ReservationDate { get; set; } // Data rezerwacji
+    public TimeSpan StartTime { get; set; } // Godzina rozpoczęcia rezerwacji
+    public TimeSpan EndTime { get; set; } // Godzina zakończenia rezerwacji
 
-    public string UserId { get; set; } = string.Empty; // Identyfikator użytkownika (połączony z ASP.NET Identity)
+    public string UserId { get; set; } = string.Empty; // Id użytkownika
     public IdentityUser User { get; set; } = null!; // Powiązanie z tabelą użytkowników
 }

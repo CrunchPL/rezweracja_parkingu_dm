@@ -2,19 +2,52 @@
 @model ReserveModel
 <h2>Rezerwacja miejsca parkingowego</h2>
 <form method="post">
-    <label>Sektor:</label>
-    <select asp-for="Sector">
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-    </select>
-    <br />
-    <label>Numer miejsca:</label>
-    <input type="number" asp-for="SpotNumber" min="0" max="9" />
-    <br />
-    <label>Data rezerwacji:</label>
-    <input type="date" asp-for="ReservationDate" />
-    <br />
-    <button type="submit">Rezerwuj</button>
+    <div>
+        <label>Sektor:</label>
+        <select asp-for="Sector" class="form-control" disabled="@Model.IsEdit">
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+        </select>
+    </div>
+    <div>
+        <label>Numer miejsca:</label>
+        <input asp-for="SpotNumber" type="number" class="form-control" min="0" max="9" readonly="@Model.IsEdit" />
+    </div>
+    <div>
+        <label>Data rezerwacji:</label>
+        <input asp-for="ReservationDate" type="date" class="form-control" readonly="@Model.IsEdit" />
+    </div>
+    <div>
+        <label>Godzina rozpoczęcia:</label>
+        <select asp-for="StartTime" class="form-control">
+            @for (var i = 0; i < 24; i++)
+            {
+                for (var j = 0; j < 60; j += 30)
+                {
+                    <option value="@TimeSpan.FromMinutes(i * 60 + j)">@($"{i:D2}:{j:D2}")</option>
+                }
+            }
+        </select>
+    </div>
+    <div>
+        <label>Godzina zakończenia:</label>
+        <select asp-for="EndTime" class="form-control">
+            @for (var i = 0; i < 24; i++)
+            {
+                for (var j = 0; j < 60; j += 30)
+                {
+                    <option value="@TimeSpan.FromMinutes(i * 60 + j)">@($"{i:D2}:{j:D2}")</option>
+                }
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Zapisz</button>
+
 </form>
+
+@if (!ModelState.IsValid)
+{
+    <p class="text-danger">Wystąpiły błędy w formularzu.</p>
+}

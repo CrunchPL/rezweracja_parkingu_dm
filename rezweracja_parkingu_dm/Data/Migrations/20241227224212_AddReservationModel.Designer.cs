@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace rezweracja_parkingu_dm.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241227224212_AddReservationModel")]
+    partial class AddReservationModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,9 +254,6 @@ namespace rezweracja_parkingu_dm.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<TimeSpan>("EndTime")
-                        .HasColumnType("time");
-
                     b.Property<DateTime>("ReservationDate")
                         .HasColumnType("datetime2");
 
@@ -263,9 +263,6 @@ namespace rezweracja_parkingu_dm.Data.Migrations
 
                     b.Property<int>("SpotNumber")
                         .HasColumnType("int");
-
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("time");
 
                     b.Property<string>("UserId")
                         .IsRequired()
