@@ -1,0 +1,22 @@
+﻿@page
+@model MyReservationsModel
+<h2>Moje rezerwacje</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Sektor</th>
+            <th>Numer miejsca</th>
+            <th>Data rezerwacji</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model.Reservations)
+        {
+            <tr>
+                <td>@reservation.Sector</td>
+                <td>@reservation.SpotNumber</td>
+                <td>@reservation.ReservationDate.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
