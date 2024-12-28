@@ -1,0 +1,33 @@
+﻿@page
+@model ReservationsModel
+@{
+    ViewData["Title"] = "Lista rezerwacji";
+}
+
+<h1>Lista rezerwacji</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Sektor</th>
+            <th>Numer miejsca</th>
+            <th>Data</th>
+            <th>Godzina rozpoczęcia</th>
+            <th>Godzina zakończenia</th>
+            <th>Użytkownik</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model.Reservations)
+        {
+            <tr>
+                <td>@reservation.Sector</td>
+                <td>@reservation.SpotNumber</td>
+                <td>@reservation.ReservationDate.ToShortDateString()</td>
+                <td>@reservation.StartTime</td>
+                <td>@reservation.EndTime</td>
+                <td>@reservation.UserId</td>
+            </tr>
+        }
+    </tbody>
+</table>
