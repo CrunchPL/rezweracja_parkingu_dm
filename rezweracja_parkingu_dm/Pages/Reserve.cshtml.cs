@@ -66,6 +66,12 @@ public class ReserveModel : PageModel
         var user = await _userManager.GetUserAsync(User);
         if (user == null) return RedirectToPage("/Account/Login");
 
+        if (ReservationDate < DateTime.Today)
+        {
+            ModelState.AddModelError(string.Empty, "Nie mo¿na dokonaæ rezerwacji na przesz³¹ datê.");
+            return Page();
+        }
+
         if (StartTime >= EndTime)
         {
             ModelState.AddModelError(string.Empty, "Godzina zakoñczenia musi byæ póŸniejsza ni¿ godzina rozpoczêcia.");
@@ -110,5 +116,4 @@ public class ReserveModel : PageModel
         await _context.SaveChangesAsync();
         return RedirectToPage("/MyReservations");
     }
-
 }

@@ -17,15 +17,22 @@ public class ReservationsModel : PageModel
     public void OnGet()
     {
         Reservations = _context.Reservations
-        .Include(r => r.User) // Wymagane, jeœli relacja z u¿ytkownikiem jest skonfigurowana
-        .Select(r => new ReservationViewModel
-        {
-            Sector = r.Sector,
-            SpotNumber = r.SpotNumber,
-            ReservationDate = r.ReservationDate,
-            StartTime = r.StartTime,
-            EndTime = r.EndTime,
-            UserEmail = r.User.Email // Pobieranie emaila u¿ytkownika
-        }).ToList();
+            .Join(_context.Users, // Po³¹czenie tabel
+                  r => r.UserId,
+                  u => u.Id,
+                  (r, u) => new ReservationViewModel
+                  {
+                      Sector = r.Sector,
+                      SpotNumber = r.SpotNumber,
+                      ReservationDate = r.ReservationDate,
+                      StartTime = r.StartTime,
+                      EndTime = r.EndTime,
+                      UserEmail = u.Email // Pobieranie adresu e-mail u¿ytkownika
+                  })
+            .ToList();
     }
+
+
+
+
 }
