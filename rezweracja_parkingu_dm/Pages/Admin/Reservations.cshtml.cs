@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using rezweracja_parkingu_dm.Data;
+
 
 [Authorize(Roles = "Admin")] // Ochrona widoku admina
 public class ReservationsModel : PageModel
